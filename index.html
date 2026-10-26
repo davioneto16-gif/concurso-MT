@@ -1,11 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Painel de Estudos - Câmara de Cuiabá (Nível Médio)</title>
-    <!-- Tailwind CSS CDN -->
+    <title>Portal do Concurseiro - Câmara de Cuiabá (Nível Médio)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -22,14 +20,12 @@
             }
         }
     </script>
-    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Chart.js for Analytics -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="bg-darkBg text-slate-100 font-sans min-h-screen flex flex-col">
 
-    <!-- Top Bar / Navigation -->
+    <!-- Top Bar -->
     <header class="bg-darkCard border-b border-slate-800 sticky top-0 z-50 shadow-md">
         <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center gap-4">
             <div class="flex items-center space-x-3">
@@ -41,17 +37,15 @@
                     <p class="text-xs text-slate-400">Edital nº 001/2026-CMC | Cargo: Técnico Legislativo</p>
                 </div>
             </div>
-            
-            <!-- Global Actions & Backup -->
             <div class="flex items-center space-x-2">
-                <button onclick="exportData()" class="bg-slate-700 hover:bg-slate-600 text-xs px-3 py-2 rounded font-medium transition flex items-center space-x-1" title="Baixar Backup dos Dados">
-                    <i class="fa-solid fa-download"></i> <span class="hidden sm:inline">Exportar</span>
+                <button onclick="exportData()" class="bg-slate-700 hover:bg-slate-600 text-xs px-3 py-2 rounded font-medium transition flex items-center space-x-1">
+                    <i class="fa-solid fa-download"></i> <span>Exportar</span>
                 </button>
-                <label class="bg-slate-700 hover:bg-slate-600 text-xs px-3 py-2 rounded font-medium transition flex items-center space-x-1 cursor-pointer" title="Restaurar Backup">
-                    <i class="fa-solid fa-upload"></i> <span class="hidden sm:inline">Importar</span>
+                <label class="bg-slate-700 hover:bg-slate-600 text-xs px-3 py-2 rounded font-medium transition flex items-center space-x-1 cursor-pointer">
+                    <i class="fa-solid fa-upload"></i> <span>Importar</span>
                     <input type="file" id="importFile" onchange="importData(event)" class="hidden" accept=".json">
                 </label>
-                <button onclick="resetData()" class="bg-red-900/40 hover:bg-red-900 text-red-300 text-xs px-3 py-2 rounded font-medium transition" title="Zerar Progresso">
+                <button onclick="resetData()" class="bg-red-900/40 hover:bg-red-900 text-red-300 text-xs px-3 py-2 rounded font-medium transition">
                     <i class="fa-solid fa-rotate-right"></i>
                 </button>
             </div>
@@ -60,39 +54,24 @@
 
     <!-- Main Container -->
     <main class="max-w-7xl mx-auto px-4 py-6 flex-grow w-full space-y-6">
-
-        <!-- Countdown & Overview Widget -->
+        
+        <!-- Info Cards Grid -->
         <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <!-- Countdown -->
             <div class="bg-darkCard border border-slate-800 rounded-xl p-5 shadow-lg flex flex-col justify-between">
                 <div class="flex justify-between items-center mb-3">
                     <h2 class="text-sm font-semibold uppercase tracking-wider text-slate-400 flex items-center gap-2">
-                        <i class="fa-regular fa-clock text-blue-500"></i> Contagem Regressiva para a Prova
+                        <i class="fa-regular fa-clock text-blue-500"></i> Contagem Regressiva
                     </h2>
                     <span class="text-xs bg-blue-500/10 text-blue-400 px-2 py-0.5 rounded font-medium">13 Dez 2026</span>
                 </div>
                 <div id="countdown" class="grid grid-cols-4 gap-2 text-center my-2">
-                    <div class="bg-slate-900/60 p-2 rounded-lg border border-slate-800">
-                        <span id="days" class="text-2xl font-bold text-blue-400">00</span>
-                        <p class="text-[10px] text-slate-400 uppercase">Dias</p>
-                    </div>
-                    <div class="bg-slate-900/60 p-2 rounded-lg border border-slate-800">
-                        <span id="hours" class="text-2xl font-bold text-blue-400">00</span>
-                        <p class="text-[10px] text-slate-400 uppercase">Horas</p>
-                    </div>
-                    <div class="bg-slate-900/60 p-2 rounded-lg border border-slate-800">
-                        <span id="minutes" class="text-2xl font-bold text-blue-400">00</span>
-                        <p class="text-[10px] text-slate-400 uppercase">Min</p>
-                    </div>
-                    <div class="bg-slate-900/60 p-2 rounded-lg border border-slate-800">
-                        <span id="seconds" class="text-2xl font-bold text-blue-400">00</span>
-                        <p class="text-[10px] text-slate-400 uppercase">Seg</p>
-                    </div>
+                    <div class="bg-slate-900/60 p-2 rounded-lg border border-slate-800"><span id="days" class="text-2xl font-bold text-blue-400">00</span><p class="text-[10px] text-slate-400 uppercase">Dias</p></div>
+                    <div class="bg-slate-900/60 p-2 rounded-lg border border-slate-800"><span id="hours" class="text-2xl font-bold text-blue-400">00</span><p class="text-[10px] text-slate-400 uppercase">Horas</p></div>
+                    <div class="bg-slate-900/60 p-2 rounded-lg border border-slate-800"><span id="minutes" class="text-2xl font-bold text-blue-400">00</span><p class="text-[10px] text-slate-400 uppercase">Min</p></div>
+                    <div class="bg-slate-900/60 p-2 rounded-lg border border-slate-800"><span id="seconds" class="text-2xl font-bold text-blue-400">00</span><p class="text-[10px] text-slate-400 uppercase">Seg</p></div>
                 </div>
-                <p class="text-xs text-slate-400 text-center mt-2">Provas no período da Tarde (Cuiabá-MT)</p>
             </div>
 
-            <!-- Salary & Info Card -->
             <div class="bg-darkCard border border-slate-800 rounded-xl p-5 shadow-lg flex flex-col justify-between">
                 <div>
                     <h2 class="text-sm font-semibold uppercase tracking-wider text-slate-400 flex items-center gap-2">
@@ -100,22 +79,21 @@
                     </h2>
                     <div class="flex items-baseline space-x-2 my-1">
                         <span class="text-3xl font-extrabold text-emerald-400">R$ 8.018,91</span>
-                        <span class="text-xs text-slate-400">mensais (30h/sem)</span>
+                        <span class="text-xs text-slate-400">mensais</span>
                     </div>
-                    <p class="text-xs text-slate-300 mt-2">Vencimento Base: R$ 5.518,91 + Auxílio-Alimentação (R$ 1.500) + Auxílio-Saúde (R$ 1.000).</p>
+                    <p class="text-xs text-slate-300 mt-2">Vencimento Base + Auxílios (30h/sem)[span_5](start_span)[span_5](end_span)[span_6](start_span)[span_6](end_span).</p>
                 </div>
                 <div class="mt-4 pt-3 border-t border-slate-800 flex justify-between text-xs text-slate-400">
-                    <span>Banca: <strong>Selecon</strong></span>
+                    <span>Banca: <strong>Selecon</strong>[span_7](start_span)[span_7](end_span)</span>
                     <span>Inscrições: <strong>Até 30/11</strong></span>
                 </div>
             </div>
 
-            <!-- Global Progress Bar -->
             <div class="bg-darkCard border border-slate-800 rounded-xl p-5 shadow-lg flex flex-col justify-between">
                 <div>
                     <div class="flex justify-between items-center mb-2">
                         <h2 class="text-sm font-semibold uppercase tracking-wider text-slate-400 flex items-center gap-2">
-                            <i class="fa-solid fa-chart-pie text-purple-500"></i> Progresso Geral do Edital
+                            <i class="fa-solid fa-chart-pie text-purple-500"></i> Progresso Geral
                         </h2>
                         <span id="global-percent" class="text-lg font-bold text-purple-400">0%</span>
                     </div>
@@ -123,10 +101,6 @@
                         <div id="global-bar" class="bg-gradient-to-r from-blue-500 to-purple-600 h-3 rounded-full transition-all duration-500" style="width: 0%"></div>
                     </div>
                     <p id="global-stats" class="text-xs text-slate-400">0 de 0 tópicos concluídos.</p>
-                </div>
-                <div class="mt-4 pt-3 border-t border-slate-800 flex justify-between text-xs">
-                    <span class="text-slate-400">Meta: Estudar todos os dias</span>
-                    <span class="text-purple-400 font-medium">Foco Total!</span>
                 </div>
             </div>
         </section>
@@ -136,11 +110,14 @@
             <button onclick="switchTab('syllabus')" id="tab-syllabus" class="tab-btn px-5 py-3 border-b-2 font-medium text-sm transition flex items-center gap-2 border-blue-500 text-blue-400 whitespace-nowrap">
                 <i class="fa-solid fa-list-check"></i> Edital Verticalizado
             </button>
+            <button onclick="switchTab('classes')" id="tab-classes" class="tab-btn px-5 py-3 border-b-2 font-medium text-sm transition flex items-center gap-2 border-transparent text-slate-400 hover:text-slate-200 whitespace-nowrap">
+                <i class="fa-solid fa-video"></i> Videoaulas e Cursos
+            </button>
             <button onclick="switchTab('pomodoro')" id="tab-pomodoro" class="tab-btn px-5 py-3 border-b-2 font-medium text-sm transition flex items-center gap-2 border-transparent text-slate-400 hover:text-slate-200 whitespace-nowrap">
                 <i class="fa-solid fa-stopwatch"></i> Cronômetro & Pomodoro
             </button>
             <button onclick="switchTab('simulador')" id="tab-simulador" class="tab-btn px-5 py-3 border-b-2 font-medium text-sm transition flex items-center gap-2 border-transparent text-slate-400 hover:text-slate-200 whitespace-nowrap">
-                <i class="fa-solid fa-pen-to-square"></i> Simulados & Desempenho
+                <i class="fa-solid fa-pen-to-square"></i> Simulados
             </button>
             <button onclick="switchTab('redacao')" id="tab-redacao" class="tab-btn px-5 py-3 border-b-2 font-medium text-sm transition flex items-center gap-2 border-transparent text-slate-400 hover:text-slate-200 whitespace-nowrap">
                 <i class="fa-solid fa-file-lines"></i> Treino de Redação
@@ -151,7 +128,7 @@
         <div id="content-syllabus" class="tab-content space-y-6">
             <div class="flex flex-wrap gap-2 items-center justify-between bg-darkCard p-4 rounded-xl border border-slate-800">
                 <div class="flex items-center space-x-2">
-                    <span class="text-xs text-slate-400 font-medium uppercase">Cargo Específico:</span>
+                    <span class="text-xs text-slate-400 font-medium uppercase">Cargo:</span>
                     <select id="role-select" onchange="changeRole(this.value)" class="bg-slate-900 border border-slate-700 text-slate-200 text-xs rounded-lg px-3 py-2 outline-none focus:border-blue-500">
                         <option value="geral">Técnico Legislativo (Geral)</option>
                         <option value="sonorizacao">Técnico Legislativo - Sonorização</option>
@@ -159,135 +136,269 @@
                     </select>
                 </div>
                 <div class="text-xs text-slate-400">
-                    Legenda: <span class="text-slate-500">⚪ Não Iniciado</span> | <span class="text-blue-400">📖 Teoria</span> | <span class="text-yellow-400">✍️ Questões</span> | <span class="text-emerald-400">✅ Revisado</span>
+                    Legenda: <span class="text-slate-500">⚪ Iniciar</span> | <span class="text-blue-400">📖 Teoria</span> | <span class="text-yellow-400">✍️ Questões</span> | <span class="text-emerald-400">✅ Revisado</span>
                 </div>
             </div>
             <div id="syllabus-container" class="space-y-4"></div>
         </div>
 
-        <!-- TAB 2: POMODORO -->
+        <!-- TAB 2: CLASSES (VIDEOAULAS) -->
+        <div id="content-classes" class="tab-content hidden space-y-6">
+            <div class="bg-darkCard border border-slate-800 rounded-xl p-6 shadow-lg space-y-4">
+                <h2 class="text-base font-semibold text-slate-200 flex items-center gap-2">
+                    <i class="fa-solid fa-play-circle text-blue-500"></i> Salas de Videoaulas por Matéria
+                </h2>
+                <p class="text-xs text-slate-400">Acesse playlists e videoaulas focadas nos principais conteúdos cobrados pela banca Selecon para o seu concurso[span_8](start_span)[span_8](end_span):</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <a href="https://www.youtube.com/results?search_query=portugues+para+concursos+selecon" target="_blank" class="bg-slate-900 p-4 rounded-xl border border-slate-800 hover:border-blue-500 transition flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div class="bg-red-600/20 text-red-400 p-3 rounded-lg"><i class="fa-brands fa-youtube text-xl"></i></div>
+                            <div>
+                                <h3 class="text-sm font-bold text-slate-200">Língua Portuguesa</h3>
+                                <p class="text-xs text-slate-400">Assistir videoaulas no YouTube</p>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-500"></i>
+                    </a>
+
+                    <a href="https://www.youtube.com/results?search_query=raciocinio+logico+para+concursos+selecon" target="_blank" class="bg-slate-900 p-4 rounded-xl border border-slate-800 hover:border-blue-500 transition flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div class="bg-red-600/20 text-red-400 p-3 rounded-lg"><i class="fa-brands fa-youtube text-xl"></i></div>
+                            <div>
+                                <h3 class="text-sm font-bold text-slate-200">Raciocínio Lógico e Matemático</h3>
+                                <p class="text-xs text-slate-400">Assistir videoaulas no YouTube</p>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-500"></i>
+                    </a>
+
+                    <a href="https://www.youtube.com/results?search_query=informatica+para+concursos+selecon" target="_blank" class="bg-slate-900 p-4 rounded-xl border border-slate-800 hover:border-blue-500 transition flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div class="bg-red-600/20 text-red-400 p-3 rounded-lg"><i class="fa-brands fa-youtube text-xl"></i></div>
+                            <div>
+                                <h3 class="text-sm font-bold text-slate-200">Noções de Informática</h3>
+                                <p class="text-xs text-slate-400">Assistir videoaulas no YouTube</p>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-500"></i>
+                    </a>
+
+                    <a href="https://www.youtube.com/results?search_query=legislacao+camara+de+cuiaba+concurso" target="_blank" class="bg-slate-900 p-4 rounded-xl border border-slate-800 hover:border-blue-500 transition flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div class="bg-red-600/20 text-red-400 p-3 rounded-lg"><i class="fa-brands fa-youtube text-xl"></i></div>
+                            <div>
+                                <h3 class="text-sm font-bold text-slate-200">Legislação Institucional e Municipal</h3>
+                                <p class="text-xs text-slate-400">Assistir videoaulas no YouTube</p>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-500"></i>
+                    </a>
+
+                    <a href="https://www.youtube.com/results?search_query=historia+e+geografia+de+mato+grosso+concurso" target="_blank" class="bg-slate-900 p-4 rounded-xl border border-slate-800 hover:border-blue-500 transition flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div class="bg-red-600/20 text-red-400 p-3 rounded-lg"><i class="fa-brands fa-youtube text-xl"></i></div>
+                            <div>
+                                <h3 class="text-sm font-bold text-slate-200">História e Geografia de MT</h3>
+                                <p class="text-xs text-slate-400">Assistir videoaulas no YouTube</p>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-500"></i>
+                    </a>
+
+                    <a href="https://www.youtube.com/results?search_query=conhecimentos+especificos+tecnico+legislativo+selecon" target="_blank" class="bg-slate-900 p-4 rounded-xl border border-slate-800 hover:border-blue-500 transition flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div class="bg-red-600/20 text-red-400 p-3 rounded-lg"><i class="fa-brands fa-youtube text-xl"></i></div>
+                            <div>
+                                <h3 class="text-sm font-bold text-slate-200">Conhecimentos Específicos</h3>
+                                <p class="text-xs text-slate-400">Assistir videoaulas no YouTube</p>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-500"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: POMODORO -->
         <div id="content-pomodoro" class="tab-content hidden space-y-6">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="bg-darkCard border border-slate-800 rounded-xl p-6 shadow-lg flex flex-col items-center text-center">
-                    <h2 class="text-base font-semibold text-slate-300 mb-4 flex items-center gap-2">
-                        <i class="fa-solid fa-clock text-blue-500"></i> Ciclo de Estudos Pomodoro
-                    </h2>
+                    <h2 class="text-base font-semibold text-slate-300 mb-4"><i class="fa-solid fa-clock text-blue-500"></i> Cronômetro Pomodoro</h2>
                     <div class="flex space-x-2 mb-6">
-                        <button onclick="setPomodoroMode('work')" id="mode-work" class="px-4 py-1.5 rounded-lg text-xs font-semibold bg-blue-600 text-white transition">Foco (25m)</button>
-                        <button onclick="setPomodoroMode('shortBreak')" id="mode-short" class="px-4 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-400 hover:bg-slate-700 transition">Pausa Curta (5m)</button>
-                        <button onclick="setPomodoroMode('longBreak')" id="mode-long" class="px-4 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-400 hover:bg-slate-700 transition">Pausa Longa (15m)</button>
+                        <button onclick="setPomodoroMode('work')" id="mode-work" class="px-4 py-1.5 rounded-lg text-xs font-semibold bg-blue-600 text-white">Foco (25m)</button>
+                        <button onclick="setPomodoroMode('shortBreak')" id="mode-short" class="px-4 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-400">Pausa (5m)</button>
                     </div>
                     <div id="pomodoro-display" class="text-6xl font-black tracking-wider text-blue-400 my-4 font-mono">25:00</div>
                     <div class="flex space-x-3 mt-4">
-                        <button onclick="startPomodoro()" id="pomodoro-start-btn" class="bg-emerald-600 hover:bg-emerald-500 text-white px-6 py-2.5 rounded-xl text-sm font-bold shadow-lg transition flex items-center gap-2">
-                            <i class="fa-solid fa-play"></i> Iniciar
-                        </button>
-                        <button onclick="pausePomodoro()" class="bg-amber-600 hover:bg-amber-500 text-white px-6 py-2.5 rounded-xl text-sm font-bold shadow-lg transition flex items-center gap-2">
-                            <i class="fa-solid fa-pause"></i> Pausar
-                        </button>
-                        <button onclick="resetPomodoro()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 px-4 py-2.5 rounded-xl text-sm font-bold transition">
-                            <i class="fa-solid fa-rotate-right"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="bg-darkCard border border-slate-800 rounded-xl p-6 shadow-lg flex flex-col justify-between">
-                    <div>
-                        <h2 class="text-base font-semibold text-slate-300 mb-3 flex items-center gap-2">
-                            <i class="fa-solid fa-calendar-days text-purple-500"></i> Sugestão de Ciclo Semanal (30h)
-                        </h2>
-                        <ul class="space-y-2 text-xs text-slate-300">
-                            <li class="bg-slate-900/50 p-2.5 rounded-lg border border-slate-800 flex justify-between items-center">
-                                <span><strong>Segunda:</strong> Língua Portuguesa + Lei Orgânica</span>
-                                <span class="text-blue-400 font-medium">2h 30m</span>
-                            </li>
-                            <li class="bg-slate-900/50 p-2.5 rounded-lg border border-slate-800 flex justify-between items-center">
-                                <span><strong>Terça:</strong> Raciocínio Lógico + Regimento Interno</span>
-                                <span class="text-blue-400 font-medium">2h 30m</span>
-                            </li>
-                            <li class="bg-slate-900/50 p-2.5 rounded-lg border border-slate-800 flex justify-between items-center">
-                                <span><strong>Quarta:</strong> Informática + Estatuto dos Servidores (LC 93)</span>
-                                <span class="text-blue-400 font-medium">2h 30m</span>
-                            </li>
-                            <li class="bg-slate-900/50 p-2.5 rounded-lg border border-slate-800 flex justify-between items-center">
-                                <span><strong>Quinta:</strong> História e Geografia de MT</span>
-                                <span class="text-blue-400 font-medium">2h 30m</span>
-                            </li>
-                            <li class="bg-slate-900/50 p-2.5 rounded-lg border border-slate-800 flex justify-between items-center">
-                                <span><strong>Sexta:</strong> Conhecimentos Específicos</span>
-                                <span class="text-blue-400 font-medium">3h 00m</span>
-                            </li>
-                            <li class="bg-slate-900/50 p-2.5 rounded-lg border border-slate-800 flex justify-between items-center">
-                                <span><strong>Sábado:</strong> Revisão + Questões (Selecon)</span>
-                                <span class="text-purple-400 font-medium">4h 00m</span>
-                            </li>
-                        </ul>
+                        <button onclick="startPomodoro()" id="pomodoro-start-btn" class="bg-emerald-600 hover:bg-emerald-500 text-white px-6 py-2.5 rounded-xl text-sm font-bold shadow-lg"><i class="fa-solid fa-play"></i> Iniciar</button>
+                        <button onclick="pausePomodoro()" class="bg-amber-600 hover:bg-amber-500 text-white px-6 py-2.5 rounded-xl text-sm font-bold shadow-lg"><i class="fa-solid fa-pause"></i> Pausar</button>
+                        <button onclick="resetPomodoro()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 px-4 py-2.5 rounded-xl text-sm font-bold"><i class="fa-solid fa-rotate-right"></i></button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- TAB 3: SIMULATOR -->
+        <!-- TAB 4: SIMULATOR -->
         <div id="content-simulador" class="tab-content hidden space-y-6">
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div class="bg-darkCard border border-slate-800 rounded-xl p-5 shadow-lg">
-                    <h2 class="text-sm font-semibold text-slate-300 mb-4 flex items-center gap-2">
-                        <i class="fa-solid fa-plus text-emerald-500"></i> Registrar Novo Simulado
-                    </h2>
-                    <form onsubmit="addSimulado(event)" class="space-y-4 text-xs">
-                        <div>
-                            <label class="block text-slate-400 mb-1">Título / Banca</label>
-                            <input type="text" id="sim-title" required placeholder="Ex: Simulado 01 - Selecon" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-slate-200 outline-none focus:border-blue-500">
-                        </div>
-                        <div class="grid grid-cols-2 gap-2">
-                            <div>
-                                <label class="block text-slate-400 mb-1">Acertos (/70)</label>
-                                <input type="number" id="sim-acertos" min="0" max="70" required class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-slate-200 outline-none focus:border-blue-500">
-                            </div>
-                            <div>
-                                <label class="block text-slate-400 mb-1">Discursiva (/100)</label>
-                                <input type="number" id="sim-discursiva" min="0" max="100" step="0.5" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-slate-200 outline-none focus:border-blue-500" placeholder="Opcional">
-                            </div>
-                        </div>
-                        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-2.5 rounded-lg transition shadow">Salvar Resultado</button>
-                    </form>
-                </div>
-                <div class="bg-darkCard border border-slate-800 rounded-xl p-5 shadow-lg lg:col-span-2 flex flex-col justify-between">
-                    <h2 class="text-sm font-semibold text-slate-300 mb-3 flex items-center gap-2">
-                        <i class="fa-solid fa-chart-line text-blue-500"></i> Evolução de Acertos
-                    </h2>
-                    <div class="relative h-64 w-full"><canvas id="simuladorChart"></canvas></div>
-                </div>
-            </div>
-            <div class="bg-darkCard border border-slate-800 rounded-xl p-5 shadow-lg overflow-x-auto">
-                <h3 class="text-sm font-semibold text-slate-300 mb-3">Histórico</h3>
-                <table class="w-full text-left text-xs text-slate-300">
-                    <thead class="bg-slate-900 text-slate-400 uppercase text-[10px]">
-                        <tr><th class="p-3">Data</th><th class="p-3">Simulado</th><th class="p-3">Acertos</th><th class="p-3">Discursiva</th><th class="p-3 text-right">Ações</th></tr>
-                    </thead>
-                    <tbody id="simulado-table-body" class="divide-y divide-slate-800"></tbody>
-                </table>
+            <div class="bg-darkCard border border-slate-800 rounded-xl p-5 shadow-lg">
+                <h2 class="text-sm font-semibold text-slate-300 mb-4">Registrar Simulado</h2>
+                <form onsubmit="addSimulado(event)" class="space-y-4 text-xs">
+                    <input type="text" id="sim-title" required placeholder="Ex: Simulado 01 - Selecon" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-slate-200">
+                    <input type="number" id="sim-acertos" min="0" max="70" required placeholder="Acertos (/70)" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-slate-200">
+                    <button type="submit" class="w-full bg-blue-600 text-white font-bold py-2.5 rounded-lg">Salvar Resultado</button>
+                </form>
             </div>
         </div>
 
-        <!-- TAB 4: REDAÇÃO -->
+        <!-- TAB 5: REDAÇÃO -->
         <div id="content-redacao" class="tab-content hidden space-y-6">
             <div class="bg-darkCard border border-slate-800 rounded-xl p-6 shadow-lg">
-                <div class="flex flex-wrap justify-between items-center mb-4 gap-2">
-                    <div>
-                        <h2 class="text-base font-semibold text-slate-300 flex items-center gap-2">
-                            <i class="fa-solid fa-pen-nib text-purple-500"></i> Treino de Redação
-                        </h2>
-                        <p class="text-xs text-slate-400">Edital: 15 a 25 linhas[span_0](start_span)[span_0](end_span).</p>
-                    </div>
-                    <div id="line-counter-badge" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-900 border border-slate-700 text-slate-300">
-                        Linhas: <span id="current-lines" class="text-blue-400">0</span> / 25
-                    </div>
-                </div>
-                <textarea id="essay-input" oninput="updateEssayStats()" rows="10" placeholder="Escreva seu texto aqui..." class="w-full bg-slate-900 border border-slate-700 rounded-xl p-4 text-sm text-slate-200 outline-none focus:border-purple-500 font-mono leading-relaxed"></textarea>
-                <div class="flex justify-between items-center mt-4 text-xs text-slate-400">
-                    <span id="essay-status" class="text-slate-400">Aguardando texto...</span>
-                    <button onclick="clearEssay()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 px-4 py-2 rounded-lg font-medium transition">Limpar</button>
-                </div>
+                <h2 class="text-base font-semibold text-slate-300 mb-4">Treino de Redação (15 a 25 linhas)[span_9](start_span)[span_9](end_span)</h2>
+                <textarea id="essay-input" oninput="updateEssayStats()" rows="10" placeholder="Escreva seu texto dissertativo..." class="w-full bg-slate-900 border border-slate-700 rounded-xl p-4 text-sm text-slate-200"></textarea>
+                <p id="essay-status" class="text-xs text-slate-400 mt-2">Aguardando texto...</p>
             </div>
         </div>
     </main>
+
+    <script>
+        const syllabusData = {
+            geral: [
+                { category: "Língua Portuguesa", topics: ["Interpretação de Textos", "Morfologia", "Sintaxe", "Pontuação"] },
+                { category: "Raciocínio Lógico", topics: ["Proposições", "Conectivos", "Diagramas Lógicos"] },
+                { category: "Informática", topics: ["Windows/Linux", "Pacote Office", "Segurança da Informação"] },
+                { category: "Legislação", topics: ["Lei Orgânica de Cuiabá", "Regimento Interno da Câmara", "Estatuto dos Servidores"] },
+                { category: "História e Geografia de MT", topics: ["Fundação de Cuiabá", "Geografia do Estado"] },
+                { category: "Conhecimentos Específicos", topics: ["Administração Pública", "Direito Administrativo", "Processo Legislativo"] }
+            ],
+            sonorizacao: [{ category: "Sonorização", topics: ["Acústica", "Mesas de Som", "Captação de Áudio"] }],
+            cerimonial: [{ category: "Cerimonial", topics: ["Protocolo e Etiqueta", "Precedência", "Eventos"] }]
+        };
+
+        let userProgress = JSON.parse(localStorage.getItem('cuiaba_progress')) || {};
+        let currentRole = 'geral';
+
+        function saveProgress() {
+            localStorage.setItem('cuiaba_progress', JSON.stringify(userProgress));
+            updateGlobalStats();
+        }
+        function getTopicStatus(role, catIndex, topIndex) { return userProgress[role]?.[catIndex]?.[topIndex] || 0; }
+        function setTopicStatus(role, catIndex, topIndex, status) {
+            if (!userProgress[role]) userProgress[role] = {};
+            if (!userProgress[role][catIndex]) userProgress[role][catIndex] = {};
+            userProgress[role][catIndex][topIndex] = status;
+            saveProgress();
+            renderSyllabus();
+        }
+        function changeRole(role) { currentRole = role; renderSyllabus(); }
+
+        function renderSyllabus() {
+            const container = document.getElementById('syllabus-container');
+            const data = syllabusData[currentRole];
+            container.innerHTML = '';
+            data.forEach((cat, catIndex) => {
+                const card = document.createElement('div');
+                card.className = 'bg-darkCard border border-slate-800 rounded-xl p-5 shadow-lg';
+                let topicsHTML = '';
+                cat.topics.forEach((topic, topIndex) => {
+                    const status = getTopicStatus(currentRole, catIndex, topIndex);
+                    const cols = ['bg-slate-900 text-slate-400', 'bg-blue-950 text-blue-300', 'bg-yellow-950 text-yellow-300', 'bg-emerald-950 text-emerald-300'];
+                    topicsHTML += `<div class="p-3 rounded-lg border border-slate-800 flex justify-between items-center ${cols[status]}">
+                        <span class="text-xs font-medium">${topic}</span>
+                        <div class="flex space-x-1">
+                            <button onclick="setTopicStatus('${currentRole}', ${catIndex}, ${topIndex}, 1)" class="px-2 py-1 text-[10px] bg-slate-800 rounded">Teoria</button>
+                            <button onclick="setTopicStatus('${currentRole}', ${catIndex}, ${topIndex}, 2)" class="px-2 py-1 text-[10px] bg-slate-800 rounded">Questões</button>
+                            <button onclick="setTopicStatus('${currentRole}', ${catIndex}, ${topIndex}, 3)" class="px-2 py-1 text-[10px] bg-slate-800 rounded">Revisado</button>
+                        </div></div>`;
+                });
+                card.innerHTML = `<h3 class="text-sm font-bold text-slate-200 mb-3">${cat.category}</h3><div class="space-y-2">${topicsHTML}</div>`;
+                container.appendChild(card);
+            });
+            updateGlobalStats();
+        }
+
+        function updateGlobalStats() {
+            let total = 0, done = 0;
+            Object.keys(syllabusData).forEach(role => {
+                syllabusData[role].forEach((cat, catIdx) => {
+                    cat.topics.forEach((top, topIdx) => {
+                        total++;
+                        if (getTopicStatus(role, catIdx, topIdx) > 0) done++;
+                    });
+                });
+            });
+            const percent = total > 0 ? Math.round((done / total) * 100) : 0;
+            document.getElementById('global-percent').innerText = percent + '%';
+            document.getElementById('global-bar').style.width = percent + '%';
+            document.getElementById('global-stats').innerText = `${done} de ${total} tópicos estudados.`;
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('border-blue-500', 'text-blue-400'));
+            document.getElementById('content-' + tabId).classList.remove('hidden');
+            document.getElementById('tab-' + tabId).classList.add('border-blue-500', 'text-blue-400');
+        }
+
+        function updateCountdown() {
+            const diff = new Date('2026-12-13T13:00:00') - new Date();
+            if (diff <= 0) return;
+            document.getElementById('days').innerText = String(Math.floor(diff / (1000 * 60 * 60 * 24))).padStart(2, '0');
+            document.getElementById('hours').innerText = String(Math.floor((diff / (1000 * 60 * 60)) % 24)).padStart(2, '0');
+            document.getElementById('minutes').innerText = String(Math.floor((diff / 1000 / 60) % 60)).padStart(2, '0');
+            document.getElementById('seconds').innerText = String(Math.floor((diff / 1000) % 60)).padStart(2, '0');
+        }
+        setInterval(updateCountdown, 1000);
+
+        let pomodoroTimer = null, timeLeft = 25 * 60, isRunning = false;
+        function setPomodoroMode(mode) {
+            clearInterval(pomodoroTimer); isRunning = false;
+            timeLeft = mode === 'work' ? 25 * 60 : 5 * 60;
+            updatePomodoroDisplay();
+        }
+        function updatePomodoroDisplay() {
+            document.getElementById('pomodoro-display').innerText = `${String(Math.floor(timeLeft / 60)).padStart(2, '0')}:${String(timeLeft % 60).padStart(2, '0')}`;
+        }
+        function startPomodoro() {
+            if (isRunning) return; isRunning = true;
+            pomodoroTimer = setInterval(() => {
+                if (timeLeft > 0) { timeLeft--; updatePomodoroDisplay(); }
+                else { clearInterval(pomodoroTimer); isRunning = false; alert("Tempo encerrado!"); }
+            }, 1000);
+        }
+        function pausePomodoro() { clearInterval(pomodoroTimer); isRunning = false; }
+        function resetPomodoro() { setPomodoroMode('work'); }
+
+        let simulados = [];
+        function addSimulado(e) {
+            e.preventDefault();
+            simulados.push({ title: document.getElementById('sim-title').value, acertos: document.getElementById('sim-acertos').value });
+            alert("Simulado salvo!"); e.target.reset();
+        }
+
+        function updateEssayStats() {
+            const lines = document.getElementById('essay-input').value.split('\n').length;
+            document.getElementById('essay-status').innerText = `${lines} linhas (Ideal: 15 a 25)[span_10](start_span)[span_10](end_span).`;
+        }
+
+        function exportData() {
+            const dl = document.createElement('a');
+            dl.href = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify({ userProgress, simulados }));
+            dl.download = "backup.json"; dl.click();
+        }
+        function importData(e) {
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                const data = JSON.parse(evt.target.result);
+                userProgress = data.userProgress || {};
+                simulados = data.simulados || [];
+                saveProgress(); renderSyllabus(); alert("Importado!");
+            };
+            reader.readAsText(e.target.files[0]);
+        }
+        function resetData() { if (confirm("Zerar?")) { localStorage.clear(); location.reload(); } }
+
+        window.onload = () => { renderSyllabus(); updatePomodoroDisplay(); };
+    </script>
+</body>
+</html>
