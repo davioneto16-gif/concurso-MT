@@ -14,4 +14,280 @@
                 extend: {
                     colors: {
                         darkBg: '#0f172a',
-                        darkCard: '#1e29
+                        darkCard: '#1e293b',
+                        accent: '#3b82f6',
+                        accentHover: '#2563eb'
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js for Analytics -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-darkBg text-slate-100 font-sans min-h-screen flex flex-col">
+
+    <!-- Top Bar / Navigation -->
+    <header class="bg-darkCard border-b border-slate-800 sticky top-0 z-50 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center gap-4">
+            <div class="flex items-center space-x-3">
+                <div class="bg-blue-600 p-2 rounded-lg text-white">
+                    <i class="fa-solid fa-graduation-cap text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg tracking-wide">Câmara de Cuiabá - Nível Médio</h1>
+                    <p class="text-xs text-slate-400">Edital nº 001/2026-CMC | Cargo: Técnico Legislativo</p>
+                </div>
+            </div>
+            
+            <!-- Global Actions & Backup -->
+            <div class="flex items-center space-x-2">
+                <button onclick="exportData()" class="bg-slate-700 hover:bg-slate-600 text-xs px-3 py-2 rounded font-medium transition flex items-center space-x-1" title="Baixar Backup dos Dados">
+                    <i class="fa-solid fa-download"></i> <span class="hidden sm:inline">Exportar</span>
+                </button>
+                <label class="bg-slate-700 hover:bg-slate-600 text-xs px-3 py-2 rounded font-medium transition flex items-center space-x-1 cursor-pointer" title="Restaurar Backup">
+                    <i class="fa-solid fa-upload"></i> <span class="hidden sm:inline">Importar</span>
+                    <input type="file" id="importFile" onchange="importData(event)" class="hidden" accept=".json">
+                </label>
+                <button onclick="resetData()" class="bg-red-900/40 hover:bg-red-900 text-red-300 text-xs px-3 py-2 rounded font-medium transition" title="Zerar Progresso">
+                    <i class="fa-solid fa-rotate-right"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 py-6 flex-grow w-full space-y-6">
+
+        <!-- Countdown & Overview Widget -->
+        <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Countdown -->
+            <div class="bg-darkCard border border-slate-800 rounded-xl p-5 shadow-lg flex flex-col justify-between">
+                <div class="flex justify-between items-center mb-3">
+                    <h2 class="text-sm font-semibold uppercase tracking-wider text-slate-400 flex items-center gap-2">
+                        <i class="fa-regular fa-clock text-blue-500"></i> Contagem Regressiva para a Prova
+                    </h2>
+                    <span class="text-xs bg-blue-500/10 text-blue-400 px-2 py-0.5 rounded font-medium">13 Dez 2026</span>
+                </div>
+                <div id="countdown" class="grid grid-cols-4 gap-2 text-center my-2">
+                    <div class="bg-slate-900/60 p-2 rounded-lg border border-slate-800">
+                        <span id="days" class="text-2xl font-bold text-blue-400">00</span>
+                        <p class="text-[10px] text-slate-400 uppercase">Dias</p>
+                    </div>
+                    <div class="bg-slate-900/60 p-2 rounded-lg border border-slate-800">
+                        <span id="hours" class="text-2xl font-bold text-blue-400">00</span>
+                        <p class="text-[10px] text-slate-400 uppercase">Horas</p>
+                    </div>
+                    <div class="bg-slate-900/60 p-2 rounded-lg border border-slate-800">
+                        <span id="minutes" class="text-2xl font-bold text-blue-400">00</span>
+                        <p class="text-[10px] text-slate-400 uppercase">Min</p>
+                    </div>
+                    <div class="bg-slate-900/60 p-2 rounded-lg border border-slate-800">
+                        <span id="seconds" class="text-2xl font-bold text-blue-400">00</span>
+                        <p class="text-[10px] text-slate-400 uppercase">Seg</p>
+                    </div>
+                </div>
+                <p class="text-xs text-slate-400 text-center mt-2">Provas no período da Tarde (Cuiabá-MT)</p>
+            </div>
+
+            <!-- Salary & Info Card -->
+            <div class="bg-darkCard border border-slate-800 rounded-xl p-5 shadow-lg flex flex-col justify-between">
+                <div>
+                    <h2 class="text-sm font-semibold uppercase tracking-wider text-slate-400 flex items-center gap-2">
+                        <i class="fa-solid fa-wallet text-emerald-500"></i> Remuneração Inicial
+                    </h2>
+                    <div class="flex items-baseline space-x-2 my-1">
+                        <span class="text-3xl font-extrabold text-emerald-400">R$ 8.018,91</span>
+                        <span class="text-xs text-slate-400">mensais (30h/sem)</span>
+                    </div>
+                    <p class="text-xs text-slate-300 mt-2">Vencimento Base: R$ 5.518,91 + Auxílio-Alimentação (R$ 1.500) + Auxílio-Saúde (R$ 1.000).</p>
+                </div>
+                <div class="mt-4 pt-3 border-t border-slate-800 flex justify-between text-xs text-slate-400">
+                    <span>Banca: <strong>Selecon</strong></span>
+                    <span>Inscrições: <strong>Até 30/11</strong></span>
+                </div>
+            </div>
+
+            <!-- Global Progress Bar -->
+            <div class="bg-darkCard border border-slate-800 rounded-xl p-5 shadow-lg flex flex-col justify-between">
+                <div>
+                    <div class="flex justify-between items-center mb-2">
+                        <h2 class="text-sm font-semibold uppercase tracking-wider text-slate-400 flex items-center gap-2">
+                            <i class="fa-solid fa-chart-pie text-purple-500"></i> Progresso Geral do Edital
+                        </h2>
+                        <span id="global-percent" class="text-lg font-bold text-purple-400">0%</span>
+                    </div>
+                    <div class="w-full bg-slate-900 rounded-full h-3 mb-3 border border-slate-800 overflow-hidden">
+                        <div id="global-bar" class="bg-gradient-to-r from-blue-500 to-purple-600 h-3 rounded-full transition-all duration-500" style="width: 0%"></div>
+                    </div>
+                    <p id="global-stats" class="text-xs text-slate-400">0 de 0 tópicos concluídos.</p>
+                </div>
+                <div class="mt-4 pt-3 border-t border-slate-800 flex justify-between text-xs">
+                    <span class="text-slate-400">Meta: Estudar todos os dias</span>
+                    <span class="text-purple-400 font-medium">Foco Total!</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Navigation Tabs -->
+        <div class="flex border-b border-slate-800 overflow-x-auto space-x-2 scrollbar-none">
+            <button onclick="switchTab('syllabus')" id="tab-syllabus" class="tab-btn px-5 py-3 border-b-2 font-medium text-sm transition flex items-center gap-2 border-blue-500 text-blue-400 whitespace-nowrap">
+                <i class="fa-solid fa-list-check"></i> Edital Verticalizado
+            </button>
+            <button onclick="switchTab('pomodoro')" id="tab-pomodoro" class="tab-btn px-5 py-3 border-b-2 font-medium text-sm transition flex items-center gap-2 border-transparent text-slate-400 hover:text-slate-200 whitespace-nowrap">
+                <i class="fa-solid fa-stopwatch"></i> Cronômetro & Pomodoro
+            </button>
+            <button onclick="switchTab('simulador')" id="tab-simulador" class="tab-btn px-5 py-3 border-b-2 font-medium text-sm transition flex items-center gap-2 border-transparent text-slate-400 hover:text-slate-200 whitespace-nowrap">
+                <i class="fa-solid fa-pen-to-square"></i> Simulados & Desempenho
+            </button>
+            <button onclick="switchTab('redacao')" id="tab-redacao" class="tab-btn px-5 py-3 border-b-2 font-medium text-sm transition flex items-center gap-2 border-transparent text-slate-400 hover:text-slate-200 whitespace-nowrap">
+                <i class="fa-solid fa-file-lines"></i> Treino de Redação
+            </button>
+        </div>
+
+        <!-- TAB 1: SYLLABUS -->
+        <div id="content-syllabus" class="tab-content space-y-6">
+            <div class="flex flex-wrap gap-2 items-center justify-between bg-darkCard p-4 rounded-xl border border-slate-800">
+                <div class="flex items-center space-x-2">
+                    <span class="text-xs text-slate-400 font-medium uppercase">Cargo Específico:</span>
+                    <select id="role-select" onchange="changeRole(this.value)" class="bg-slate-900 border border-slate-700 text-slate-200 text-xs rounded-lg px-3 py-2 outline-none focus:border-blue-500">
+                        <option value="geral">Técnico Legislativo (Geral)</option>
+                        <option value="sonorizacao">Técnico Legislativo - Sonorização</option>
+                        <option value="cerimonial">Técnico Legislativo - Cerimonial</option>
+                    </select>
+                </div>
+                <div class="text-xs text-slate-400">
+                    Legenda: <span class="text-slate-500">⚪ Não Iniciado</span> | <span class="text-blue-400">📖 Teoria</span> | <span class="text-yellow-400">✍️ Questões</span> | <span class="text-emerald-400">✅ Revisado</span>
+                </div>
+            </div>
+            <div id="syllabus-container" class="space-y-4"></div>
+        </div>
+
+        <!-- TAB 2: POMODORO -->
+        <div id="content-pomodoro" class="tab-content hidden space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-darkCard border border-slate-800 rounded-xl p-6 shadow-lg flex flex-col items-center text-center">
+                    <h2 class="text-base font-semibold text-slate-300 mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-clock text-blue-500"></i> Ciclo de Estudos Pomodoro
+                    </h2>
+                    <div class="flex space-x-2 mb-6">
+                        <button onclick="setPomodoroMode('work')" id="mode-work" class="px-4 py-1.5 rounded-lg text-xs font-semibold bg-blue-600 text-white transition">Foco (25m)</button>
+                        <button onclick="setPomodoroMode('shortBreak')" id="mode-short" class="px-4 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-400 hover:bg-slate-700 transition">Pausa Curta (5m)</button>
+                        <button onclick="setPomodoroMode('longBreak')" id="mode-long" class="px-4 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-400 hover:bg-slate-700 transition">Pausa Longa (15m)</button>
+                    </div>
+                    <div id="pomodoro-display" class="text-6xl font-black tracking-wider text-blue-400 my-4 font-mono">25:00</div>
+                    <div class="flex space-x-3 mt-4">
+                        <button onclick="startPomodoro()" id="pomodoro-start-btn" class="bg-emerald-600 hover:bg-emerald-500 text-white px-6 py-2.5 rounded-xl text-sm font-bold shadow-lg transition flex items-center gap-2">
+                            <i class="fa-solid fa-play"></i> Iniciar
+                        </button>
+                        <button onclick="pausePomodoro()" class="bg-amber-600 hover:bg-amber-500 text-white px-6 py-2.5 rounded-xl text-sm font-bold shadow-lg transition flex items-center gap-2">
+                            <i class="fa-solid fa-pause"></i> Pausar
+                        </button>
+                        <button onclick="resetPomodoro()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 px-4 py-2.5 rounded-xl text-sm font-bold transition">
+                            <i class="fa-solid fa-rotate-right"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="bg-darkCard border border-slate-800 rounded-xl p-6 shadow-lg flex flex-col justify-between">
+                    <div>
+                        <h2 class="text-base font-semibold text-slate-300 mb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-calendar-days text-purple-500"></i> Sugestão de Ciclo Semanal (30h)
+                        </h2>
+                        <ul class="space-y-2 text-xs text-slate-300">
+                            <li class="bg-slate-900/50 p-2.5 rounded-lg border border-slate-800 flex justify-between items-center">
+                                <span><strong>Segunda:</strong> Língua Portuguesa + Lei Orgânica</span>
+                                <span class="text-blue-400 font-medium">2h 30m</span>
+                            </li>
+                            <li class="bg-slate-900/50 p-2.5 rounded-lg border border-slate-800 flex justify-between items-center">
+                                <span><strong>Terça:</strong> Raciocínio Lógico + Regimento Interno</span>
+                                <span class="text-blue-400 font-medium">2h 30m</span>
+                            </li>
+                            <li class="bg-slate-900/50 p-2.5 rounded-lg border border-slate-800 flex justify-between items-center">
+                                <span><strong>Quarta:</strong> Informática + Estatuto dos Servidores (LC 93)</span>
+                                <span class="text-blue-400 font-medium">2h 30m</span>
+                            </li>
+                            <li class="bg-slate-900/50 p-2.5 rounded-lg border border-slate-800 flex justify-between items-center">
+                                <span><strong>Quinta:</strong> História e Geografia de MT</span>
+                                <span class="text-blue-400 font-medium">2h 30m</span>
+                            </li>
+                            <li class="bg-slate-900/50 p-2.5 rounded-lg border border-slate-800 flex justify-between items-center">
+                                <span><strong>Sexta:</strong> Conhecimentos Específicos</span>
+                                <span class="text-blue-400 font-medium">3h 00m</span>
+                            </li>
+                            <li class="bg-slate-900/50 p-2.5 rounded-lg border border-slate-800 flex justify-between items-center">
+                                <span><strong>Sábado:</strong> Revisão + Questões (Selecon)</span>
+                                <span class="text-purple-400 font-medium">4h 00m</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: SIMULATOR -->
+        <div id="content-simulador" class="tab-content hidden space-y-6">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="bg-darkCard border border-slate-800 rounded-xl p-5 shadow-lg">
+                    <h2 class="text-sm font-semibold text-slate-300 mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-plus text-emerald-500"></i> Registrar Novo Simulado
+                    </h2>
+                    <form onsubmit="addSimulado(event)" class="space-y-4 text-xs">
+                        <div>
+                            <label class="block text-slate-400 mb-1">Título / Banca</label>
+                            <input type="text" id="sim-title" required placeholder="Ex: Simulado 01 - Selecon" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-slate-200 outline-none focus:border-blue-500">
+                        </div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="block text-slate-400 mb-1">Acertos (/70)</label>
+                                <input type="number" id="sim-acertos" min="0" max="70" required class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-slate-200 outline-none focus:border-blue-500">
+                            </div>
+                            <div>
+                                <label class="block text-slate-400 mb-1">Discursiva (/100)</label>
+                                <input type="number" id="sim-discursiva" min="0" max="100" step="0.5" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-slate-200 outline-none focus:border-blue-500" placeholder="Opcional">
+                            </div>
+                        </div>
+                        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-2.5 rounded-lg transition shadow">Salvar Resultado</button>
+                    </form>
+                </div>
+                <div class="bg-darkCard border border-slate-800 rounded-xl p-5 shadow-lg lg:col-span-2 flex flex-col justify-between">
+                    <h2 class="text-sm font-semibold text-slate-300 mb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-chart-line text-blue-500"></i> Evolução de Acertos
+                    </h2>
+                    <div class="relative h-64 w-full"><canvas id="simuladorChart"></canvas></div>
+                </div>
+            </div>
+            <div class="bg-darkCard border border-slate-800 rounded-xl p-5 shadow-lg overflow-x-auto">
+                <h3 class="text-sm font-semibold text-slate-300 mb-3">Histórico</h3>
+                <table class="w-full text-left text-xs text-slate-300">
+                    <thead class="bg-slate-900 text-slate-400 uppercase text-[10px]">
+                        <tr><th class="p-3">Data</th><th class="p-3">Simulado</th><th class="p-3">Acertos</th><th class="p-3">Discursiva</th><th class="p-3 text-right">Ações</th></tr>
+                    </thead>
+                    <tbody id="simulado-table-body" class="divide-y divide-slate-800"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- TAB 4: REDAÇÃO -->
+        <div id="content-redacao" class="tab-content hidden space-y-6">
+            <div class="bg-darkCard border border-slate-800 rounded-xl p-6 shadow-lg">
+                <div class="flex flex-wrap justify-between items-center mb-4 gap-2">
+                    <div>
+                        <h2 class="text-base font-semibold text-slate-300 flex items-center gap-2">
+                            <i class="fa-solid fa-pen-nib text-purple-500"></i> Treino de Redação
+                        </h2>
+                        <p class="text-xs text-slate-400">Edital: 15 a 25 linhas[span_0](start_span)[span_0](end_span).</p>
+                    </div>
+                    <div id="line-counter-badge" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-900 border border-slate-700 text-slate-300">
+                        Linhas: <span id="current-lines" class="text-blue-400">0</span> / 25
+                    </div>
+                </div>
+                <textarea id="essay-input" oninput="updateEssayStats()" rows="10" placeholder="Escreva seu texto aqui..." class="w-full bg-slate-900 border border-slate-700 rounded-xl p-4 text-sm text-slate-200 outline-none focus:border-purple-500 font-mono leading-relaxed"></textarea>
+                <div class="flex justify-between items-center mt-4 text-xs text-slate-400">
+                    <span id="essay-status" class="text-slate-400">Aguardando texto...</span>
+                    <button onclick="clearEssay()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 px-4 py-2 rounded-lg font-medium transition">Limpar</button>
+                </div>
+            </div>
+        </div>
+    </main>
